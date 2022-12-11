@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
     app:
-        container_name: "octane"
+        container_name: "octane_app"
         build:
             context: ./
             dockerfile: ./.docker/octane/Dockerfile
@@ -10,20 +10,35 @@ services:
         volumes:
             - ./:/var/www/
             - .docker/octane/docker-entrypoint.sh:/opt/docker-entrypoint.sh:ro
+        depends_on:
+            - db
         networks:
             - octane
     nginx:
-        container_name: ${NGINX_CONTAINER_NAME}
+        container_name: nginx_webserver
         image: nginx:alpine
         restart: unless-stopped
         tty: true
         ports:
-            - ${NGINX_EXTERNAL_PORT}:80
-            - ${NGINX_SSL_EXTERNAL_PORT}:443
+            - "80:80"
         volumes:
             - ./:/var/www/
             - .docker/nginx/:/etc/nginx/conf.d/
         command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+        depends_on:
+            - app
+        networks:
+            - octane
+    db:
+        image: mysql:8
+        container_name: octane-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            TZ: UTC
         networks:
             - octane
 networks:

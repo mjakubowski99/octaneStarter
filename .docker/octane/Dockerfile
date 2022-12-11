@@ -1,44 +1,39 @@
 ARG PHP_VERSION=8.2
 
-FROM php:${PHP_VERSION}-alpine
+FROM php:${PHP_VERSION}
 
 ENV USER=octane
 ENV GROUP=octane
 
 WORKDIR /var/www
 
-RUN apt update
-RUN apt install -y  \
-    supervisor \
-    php${PHP_VERSION}-curl php${PHP_VERSION}-openssl  \
-    php${PHP_VERSION}-mbstring php${PHP_VERSION}-xml  \
-    php${PHP_VERSION}-zip php${PHP_VERSION}-bcmath  \
-    php${PHP_VERSION}-intl php${PHP_VERSION}-opcache \
-    php${PHP_VERSION}-swoole php${PHP_VERSION}-xdebug  \
-    php${PHP_VERSION}-mysql
+RUN apt-get update
+RUN apt-get install -y openssl curl ca-certificates zip unzip git supervisor pkg-config libonig-dev libxml2-dev libzip-dev libicu-dev
+RUN docker-php-ext-install mbstring xml zip bcmath intl opcache pdo_mysql
+RUN pecl install swoole xdebug
+RUN docker-php-ext-enable swoole
+
+RUN apt-get install -y nodejs npm
 
 RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
+RUN useradd -ms /bin/bash {$USER}
+
+RUN groupmod -o -g 1000 www-data && usermod -o -u 1000 -g www-data www-data
+USER {$USER}
+
 COPY .docker/octane/docker-entrypoint.sh /opt/docker-entrypoint.sh
 COPY .docker/octane/php.ini /usr/local/etc/php/conf.d/octane.ini
+COPY .docker/octane/supervisord* /etc/supervisor/conf.d/
 
-RUN groupadd -g 1000 {$GROUP}
-RUN useradd -u 1000 -ms /bin/bash -g {$GROUP} {$USER}
-
-COPY --chown={$GROUP}:{$USER} . /var/www
-
-RUN mkdir -p storage/framework/{sessions,views,cache}
-RUN mkdir -p storage/logs
-RUN mkdir -p bootstrap/cache
-
-RUN chown -R www:www storage bootstrap/cache
-RUN chmod -R ug+rwx storage bootstrap/cache
-
-USER {$USER}
+WORKDIR /var/www
+ENTRYPOINT ["bash", "/opt/docker-entrypoint.sh"]
 
 EXPOSE 9000
 
-ENTRYPOINT ["bash", "/opt/docker-entrypoint.sh"]
+USER root
+RUN chown -R {$USER}:{$USER} /var/www
+RUN chmod -R ug+w /var/www
 
 HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 CMD php artisan octane:status || exit 1
 
