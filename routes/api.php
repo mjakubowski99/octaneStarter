@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use Component\Payment\Infrastracture\Http\Controller\OrderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,9 +15,11 @@ use App\Http\Controllers\TestController;
 |
 */
 
-Route::get('/test', [TestController::class, 'index']);
-Route::get('/rest', [TestController::class, 'test']);
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth']], function() {
+    Route::post('/stripe/paymentIntent', [OrderController::class, 'createWithStripe'])->name(
+        'stripe.paymentIntent.create'
+    );
+    Route::put('/stripe/webhook', [OrderController::class, 'receiveStripeWebhookNotification'])->name(
+        'stripe.webhook.update'
+    );
 });

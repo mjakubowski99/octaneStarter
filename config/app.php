@@ -194,7 +194,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        \Component\Payment\Infrastracture\Provider\PaymentServiceProvider::class,
+        \Common\Provider\CommonServiceProvider::class,
+        \Component\Auth\Infrastructure\Provider\AuthServiceProvider::class
     ],
 
     /*

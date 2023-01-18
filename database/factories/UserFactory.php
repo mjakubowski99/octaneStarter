@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Common\ValueObject\Uuid;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -18,6 +19,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
+            'id' => new Uuid(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),

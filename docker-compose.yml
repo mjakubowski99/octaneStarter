@@ -33,12 +33,25 @@ services:
         image: mysql:8
         container_name: octane-db
         restart: unless-stopped
+        volumes:
+            - .docker/mysql/db_data:/var/lib/mysql
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_PASSWORD: ${DB_PASSWORD}
             MYSQL_USER: ${DB_USERNAME}
             TZ: UTC
+        networks:
+            - octane
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - 8080:80
+        environment:
+            - PMA_ARBITRARY=1
+        depends_on:
+            - db
         networks:
             - octane
 networks:
