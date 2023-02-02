@@ -13,6 +13,6 @@ class OrderPaymentReceiverNotFoundException extends ApiException
 
     public function __construct(Uuid $orderId, array $metadata = [])
     {
-        parent::__construct(self::MESSAGE.$orderId, 404, $metadata);
+        parent::__construct(self::MESSAGE . $orderId, 404, $metadata);
     }
 }

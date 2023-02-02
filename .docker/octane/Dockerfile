@@ -11,7 +11,7 @@ RUN apt-get update
 RUN apt-get install -y openssl curl ca-certificates zip unzip git supervisor pkg-config libonig-dev libxml2-dev libzip-dev libicu-dev
 RUN docker-php-ext-install mbstring xml zip bcmath intl opcache pdo_mysql
 RUN pecl install swoole xdebug
-RUN docker-php-ext-enable swoole
+RUN docker-php-ext-enable swoole xdebug
 
 RUN apt-get install -y nodejs npm
 

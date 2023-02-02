@@ -19,7 +19,7 @@ class CreatePaymentIntentRequest extends FormRequest implements CreateOrderContr
         return [
             'product_id' => ['required', 'string'],
             'payment_methods' => ['required', 'array'],
-            'payment_methods.*' => ['in:'.PaymentMethod::getAvailableForValidation()]
+            'payment_methods.*' => ['in:' . PaymentMethod::getAvailableForValidation()]
         ];
     }
 

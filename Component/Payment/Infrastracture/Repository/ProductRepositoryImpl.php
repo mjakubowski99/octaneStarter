@@ -28,7 +28,7 @@ class ProductRepositoryImpl implements ProductRepository
             ->select('amount', 'currency')
             ->first();
 
-        if ($priceObject===null) {
+        if ($priceObject === null) {
             throw new ProductNotFoundException($productId);
         }
 

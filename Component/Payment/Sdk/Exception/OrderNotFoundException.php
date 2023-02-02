@@ -12,6 +12,6 @@ class OrderNotFoundException extends ApiException
 
     public function __construct(string $paymentProviderOrderId, array $metadata = [])
     {
-        parent::__construct(self::MESSAGE.$paymentProviderOrderId, 404, $metadata);
+        parent::__construct(self::MESSAGE . $paymentProviderOrderId, 404, $metadata);
     }
 }

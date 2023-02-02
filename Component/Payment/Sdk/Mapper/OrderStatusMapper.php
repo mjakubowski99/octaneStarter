@@ -15,11 +15,9 @@ final class OrderStatusMapper
         }
         if ($status->isPaymentIntentSucceeded()) {
             return OrderStatus::succeeded();
-        }
-        else if ($status->isPaymentIntentProcessing()) {
+        } elseif ($status->isPaymentIntentProcessing()) {
             return OrderStatus::cancelled();
-        }
-        else if ($status->isPaymentIntentCanceled()) {
+        } elseif ($status->isPaymentIntentCanceled()) {
             return OrderStatus::cancelled();
         }
 

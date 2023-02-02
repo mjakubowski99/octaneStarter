@@ -18,7 +18,7 @@ final class ReceiveWebhookNotification
     {
         $this->receiveWebhookNotificationStrategy = $stripeReceiveWebhookNotificationStrategy;
     }
-    
+
     public function handle(PaymentWebhookContract $contract): void
     {
         $this->getStrategyByPaymentProvider($contract->getPaymentProvider())->handle($contract);

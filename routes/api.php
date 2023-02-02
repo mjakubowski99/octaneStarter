@@ -14,11 +14,11 @@ use Component\Payment\Infrastracture\Http\Controller\OrderController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth:api']], function() {
     Route::post('/stripe/paymentIntent', [OrderController::class, 'createWithStripe'])->name(
         'stripe.paymentIntent.create'
     );
+
     Route::put('/stripe/webhook', [OrderController::class, 'receiveStripeWebhookNotification'])->name(
         'stripe.webhook.update'
     );

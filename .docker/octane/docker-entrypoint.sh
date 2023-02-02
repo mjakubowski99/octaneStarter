@@ -5,7 +5,7 @@ CONTAINER_FIRST_STARTUP="CONTAINER_FIRST_STARTUP"
 function fix_permissions() {
     chmod -R 777 bootstrap/cache
     chmod -R 666 storage/logs
-    chmod -R 777 storage/public
+    chmod -R 777 storage/app/public
 }
 
 function clear_cache() {

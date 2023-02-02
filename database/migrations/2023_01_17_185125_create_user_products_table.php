@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('user_products', function (Blueprint $table) {
             $table->uuid('user_id');
-            $table->uuid('product_id');
+            $table->uuid('product_id')->unique();
             $table->timestamps();
 
             $table->primary(['user_id', 'product_id']);

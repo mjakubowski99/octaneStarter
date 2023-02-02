@@ -18,8 +18,7 @@ class StripePaymentIntentReadModel implements Arrayable
         string $publishableKey,
         string $paymentIntentId,
         ?string $connectedAccountId
-    )
-    {
+    ) {
         $this->publishableKey = $publishableKey;
         $this->paymentIntentId = $paymentIntentId;
         $this->connectedAccountId = $connectedAccountId;

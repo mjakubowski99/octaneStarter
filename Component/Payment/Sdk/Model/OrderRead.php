@@ -32,8 +32,7 @@ final class OrderRead
         PaymentProvider $paymentProvider,
         OrderStatus $orderStatus,
         Price $price
-    )
-    {
+    ) {
         $this->id = $id;
         $this->buyerId = $buyerId;
         $this->productId = $productId;

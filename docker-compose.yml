@@ -12,6 +12,10 @@ services:
             - .docker/octane/docker-entrypoint.sh:/opt/docker-entrypoint.sh:ro
         depends_on:
             - db
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        environment:
+            - PHP_IDE_CONFIG=serverName=docker_server
         networks:
             - octane
     nginx:

@@ -21,7 +21,7 @@ class OrderMapperTest extends TestCase
 
         $this->expectException(\ErrorException::class);
 
-        $mapper->mapToOrderRead([]);
+        $mapper->mapToOrderRead(new \stdClass());
     }
 
     public function test_mapToOrderRead_ShouldThrowInvalidArgumentExceptionWhenPaymentProviderDoesNotExists(): void
@@ -30,13 +30,15 @@ class OrderMapperTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
 
-        $mapper->mapToOrderRead([
+        $data = [
             'id' => (string) new Uuid(),
             'buyer_id' => (string) new Uuid(),
             'product_id' => (string) new Uuid(),
             'payment_provider_order_id' => 1,
-            'payment_provider' => -1
-        ]);
+            'payment_provider_id' => -1
+        ];
+
+        $mapper->mapToOrderRead((object) $data);
     }
 
     public function test_mapToOrderRead_ShouldThrowInvalidArgumentExceptionWhenOrderStatusDoesNotExists(): void
@@ -45,30 +47,34 @@ class OrderMapperTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
 
-        $mapper->mapToOrderRead([
+        $data = [
             'id' => (string) new Uuid(),
             'buyer_id' => (string) new Uuid(),
             'product_id' => (string) new Uuid(),
             'payment_provider_order_id' => 1,
-            'payment_provider' => PaymentProvider::stripe()->getValue(),
-            'order_status' => -1
-        ]);
+            'payment_provider_id' => PaymentProvider::stripe()->getValue(),
+            'order_status_id' => -1
+        ];
+
+        $mapper->mapToOrderRead((object) $data);
     }
 
     public function test_mapToOrderRead_ShouldReturnOrderReadModel_WhenAllParametersDefinedInArrayAndEveryValueObjectIsValid(): void
     {
         $mapper = new OrderMapper();
 
-        $orderRead = $mapper->mapToOrderRead([
+        $data = [
             'id' => (string) new Uuid(),
             'buyer_id' => (string) new Uuid(),
             'product_id' => (string) new Uuid(),
             'payment_provider_order_id' => "some_order_id_from_payment_provider_side",
-            'payment_provider' => PaymentProvider::stripe()->getValue(),
-            'order_status' => OrderStatus::succeeded()->getValue(),
+            'payment_provider_id' => PaymentProvider::stripe()->getValue(),
+            'order_status_id' => OrderStatus::succeeded()->getValue(),
             'amount' => 100,
             'currency' => Currency::pln()->getValue()
-        ]);
+        ];
+
+        $orderRead = $mapper->mapToOrderRead((object) $data);
 
         $this->assertInstanceOf(OrderRead::class, $orderRead);
     }

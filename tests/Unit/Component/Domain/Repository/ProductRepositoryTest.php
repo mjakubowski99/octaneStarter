@@ -1,8 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Tests\Feature\Component\Domain\Repository;
+namespace Tests\Unit\Component\Domain\Repository;
 
 use Component\Payment\Domain\Repository\ProductRepository;
 use Component\Payment\Infrastracture\Entities\Product;
@@ -23,6 +21,14 @@ class ProductRepositoryTest extends TestCase
         $actualPrice = $this->productRepository->getPrice($product->getId());
 
         $this->assertTrue($product->getPrice()->equals($actualPrice));
+    }
+
+    public function test_hasOwner_ShouldReturnFalse_WhenInUserProductsTableDoesNotExistsRowRelatedToGivenProduct(): void
+    {
+        /** @var Product $product */
+        $product = Product::factory()->create();
+
+        $this->assertFalse($this->productRepository->hasOwner($product->getId()));
     }
 
     protected function setUp(): void

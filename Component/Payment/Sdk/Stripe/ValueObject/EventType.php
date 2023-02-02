@@ -43,9 +43,9 @@ final class EventType
 
     private function validate(string $value): void
     {
-        if( !in_array($this->value, self::AVAILABLE) ){
+        if (!in_array($this->value, self::AVAILABLE)) {
             throw new InvalidArgumentException(
-                "Value {$value} is not available for EventType. Available values: ".self::getAvailableForValidation()
+                "Value {$value} is not available for EventType. Available values: " . self::getAvailableForValidation()
             );
         }
     }

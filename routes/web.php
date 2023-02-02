@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['auth:web']], function() {
+    Route::redirect('/home', '/');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 });

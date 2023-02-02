@@ -14,11 +14,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasUuids, HasFactory;
+    use HasUuids;
+    use HasFactory;
 
     public function getId(): Uuid
     {
-        return new Uuid($this->id);
+        return $this->id;
     }
 
     public function getPrice(): Price

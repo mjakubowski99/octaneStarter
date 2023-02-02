@@ -93,7 +93,7 @@ final class Status
 
     private function validate(string $value): void
     {
-        if( !in_array($value, self::AVAILABLE) ){
+        if (!in_array($value, self::AVAILABLE)) {
             throw new InvalidValueObjectValueException($value, self::class, self::getAvailableForValidation());
         }
     }

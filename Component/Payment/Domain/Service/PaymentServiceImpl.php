@@ -39,7 +39,7 @@ class PaymentServiceImpl implements PaymentService
 
     public function getStripePaymentIntentReadModel(OrderRead $orderRead): StripePaymentIntentReadModel
     {
-        try{
+        try {
             $stripeConnectedAccountId = $this->orderRepository->getPaymentReceiverPaymentProviderAccountId(
                 $orderRead->getId(),
                 PaymentProvider::stripe()

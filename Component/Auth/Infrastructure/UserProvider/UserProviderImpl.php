@@ -22,7 +22,7 @@ final class UserProviderImpl implements UserProvider
     public function current(): Authenticate
     {
         /** @var User $user */
-        $user = $this->authFactory->guard('api')->user();
+        $user = $this->authFactory->guard('web')->user();
 
         if ($user === null) {
             throw new UnauthorizedException();

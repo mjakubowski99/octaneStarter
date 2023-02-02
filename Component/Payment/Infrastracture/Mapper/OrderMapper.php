@@ -10,10 +10,11 @@ use Common\ValueObject\PaymentProvider;
 use Common\ValueObject\Uuid;
 use Component\Payment\Sdk\Model\OrderRead;
 use Component\Payment\Sdk\Model\Price;
+use stdClass;
 
 final class OrderMapper
 {
-    public function mapToOrderRead(\stdClass $data): OrderRead
+    public function mapToOrderRead(stdClass $data): OrderRead
     {
         return new OrderRead(
             Uuid::fromString($data->id),

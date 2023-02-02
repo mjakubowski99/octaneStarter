@@ -26,8 +26,7 @@ final class CreateOrder
         OrderRepository $orderRepository,
         CreateOrderOnStripeSide $createOrderWithStripe,
         ProductRepository $productRepository
-    )
-    {
+    ) {
         $this->orderRepository = $orderRepository;
         $this->createOrderWithStripe = $createOrderWithStripe;
         $this->productRepository = $productRepository;

@@ -13,6 +13,6 @@ class ProductNotFoundException extends ApiException
 
     public function __construct(Uuid $id, array $metadata = [])
     {
-        parent::__construct(self::MESSAGE.$id, 404);
+        parent::__construct(self::MESSAGE . $id, 404);
     }
 }

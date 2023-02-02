@@ -25,8 +25,7 @@ class PaymentFacadeImpl implements PaymentFacade
         PaymentService $paymentService,
         ReceiveWebhookNotification $receiveWebhookNotification,
         CreateOrder $createOrder
-    )
-    {
+    ) {
         $this->paymentService = $paymentService;
         $this->receiveWebhookNotification = $receiveWebhookNotification;
         $this->createOrder = $createOrder;

@@ -26,10 +26,9 @@ final class UpdateOrderStatus
     {
         $currentStatus = $this->orderRepository->getOrderStatusByPaymentProviderOrderId($paymentProviderOrderId);
 
-        if( $currentStatus->isCreated() && $orderStatus->isProcessing() ){
+        if ($currentStatus->isCreated() && $orderStatus->isProcessing()) {
             $this->orderRepository->updateStatusByPaymentProviderOrderId($paymentProviderOrderId, $orderStatus);
-        }
-        else if( ($currentStatus->isProcessing() || $currentStatus->isCreated()) && $orderStatus->isSucceeded() ){
+        } elseif (($currentStatus->isProcessing() || $currentStatus->isCreated()) && $orderStatus->isSucceeded()) {
             $this->orderRepository->updateStatusByPaymentProviderOrderId($paymentProviderOrderId, $orderStatus);
 
             $this->eventBus->dispatch(

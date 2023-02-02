@@ -31,8 +31,7 @@ final class OrderWrite
         PaymentProvider $paymentProvider,
         OrderStatus $orderStatus,
         Price $price
-    )
-    {
+    ) {
         $this->id = new Uuid();
         $this->buyerId = $buyerId;
         $this->productId = $productId;

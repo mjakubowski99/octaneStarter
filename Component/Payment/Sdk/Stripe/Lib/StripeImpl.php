@@ -52,7 +52,7 @@ class StripeImpl implements Stripe
 
         try {
             return $this->tryToMakeWebhookEvent($requestContent, $httpSignature);
-        } catch (UnexpectedValueException|SignatureVerificationException $exception) {
+        } catch (UnexpectedValueException | SignatureVerificationException $exception) {
             throw new ApiException($exception->getMessage(), 400);
         }
     }
@@ -63,7 +63,7 @@ class StripeImpl implements Stripe
      */
     private function tryToMakeWebhookEvent(string $requestContent, string $httpSignature): StripeEvent
     {
-        try{
+        try {
             $event = Webhook::constructEvent(
                 $requestContent,
                 $httpSignature,
