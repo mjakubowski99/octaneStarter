@@ -10,6 +10,7 @@ use Common\ValueObject\Uuid;
 use Component\Payment\Domain\Repository\OrderRepository;
 use Component\Payment\Sdk\Exception\OrderPaymentReceiverNotFoundException;
 use Component\Payment\Sdk\Model\OrderRead;
+use Component\Payment\Sdk\Model\PaymentData;
 use Component\Payment\Sdk\Model\StripePaymentIntentReadModel;
 use Illuminate\Contracts\Config\Repository as Config;
 
@@ -37,21 +38,13 @@ class PaymentServiceImpl implements PaymentService
         throw new InvalidArgumentException("This provider: {$paymentProvider} does not have any publishable key defined");
     }
 
-    public function getStripePaymentIntentReadModel(OrderRead $orderRead): StripePaymentIntentReadModel
+    public function getStripePaymentIntentReadModel(PaymentData $paymentData): StripePaymentIntentReadModel
     {
-        try {
-            $stripeConnectedAccountId = $this->orderRepository->getPaymentReceiverPaymentProviderAccountId(
-                $orderRead->getId(),
-                PaymentProvider::stripe()
-            );
-        } catch (OrderPaymentReceiverNotFoundException $exception) {
-            $stripeConnectedAccountId = null;
-        }
-
         return new StripePaymentIntentReadModel(
             $this->getPublishableKeyForPaymentProvider(PaymentProvider::stripe()),
-            $orderRead->getPaymentProviderOrderId(),
-            $stripeConnectedAccountId
+            $paymentData->getClientSecret(),
+            $paymentData->getPaymentProviderOrderId(),
+            $paymentData->getPaymentReceiverId()
         );
     }
 }

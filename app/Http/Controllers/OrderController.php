@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Component\Payment\Infrastracture\Http\Controller\Web;
+namespace App\Http\Controllers;
 
 use Common\Http\Controller\AbstractController;
-use Common\ValueObject\PaymentProvider;
 use Component\Auth\Sdk\AuthFacade;
 use Component\Payment\Infrastracture\Http\Request\Stripe\CreatePaymentIntentRequest;
-use Component\Payment\Infrastracture\Http\Request\Stripe\StripeWebhookNotificationRequest;
 use Component\Payment\Sdk\PaymentFacade;
 use Illuminate\Http\JsonResponse;
 
@@ -29,19 +27,12 @@ class OrderController extends AbstractController
             $request,
             $this->authFacade->current()->getId()
         );
-        
-        return view('',[
+
+        return new JsonResponse(
             $this->paymentFacade->getStripePaymentIntentReadModel(
                 $orderRead
             )->toArray()
-        ])
-    }
-
-    public function receiveStripeWebhookNotification(StripeWebhookNotificationRequest $request): JsonResponse
-    {
-        $this->paymentFacade->receiveWebhookNotification($request);
-
-        return new JsonResponse(null, 200);
+        );
     }
 }
 

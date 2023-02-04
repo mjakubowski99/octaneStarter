@@ -29,6 +29,6 @@ final class ReceiveWebhookNotification
         if ($paymentProvider->isStripe()) {
             return $this->receiveWebhookNotificationStrategy;
         }
-        throw new InvalidArgumentException("Receiving webhook notifications is not possible for: {$paymentProvider} payment provider");
+        throw new InvalidArgumentException("Receiving webhook notifications is not possible for: {$paymentProvider} order provider");
     }
 }

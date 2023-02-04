@@ -9,7 +9,7 @@ use Common\ValueObject\Uuid;
 
 class OrderPaymentReceiverNotFoundException extends ApiException
 {
-    public const MESSAGE = "Order payment receiver not found for order with id: ";
+    public const MESSAGE = "Order order receiver not found for order with id: ";
 
     public function __construct(Uuid $orderId, array $metadata = [])
     {

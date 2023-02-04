@@ -7,6 +7,7 @@ namespace Component\Payment\Domain\Service;
 use Common\ValueObject\PaymentProvider;
 use Common\ValueObject\Uuid;
 use Component\Payment\Sdk\Model\OrderRead;
+use Component\Payment\Sdk\Model\PaymentData;
 use Component\Payment\Sdk\Model\StripePaymentIntentReadModel;
 
 interface PaymentService
@@ -15,5 +16,5 @@ interface PaymentService
 
     public function getPublishableKeyForPaymentProvider(PaymentProvider $paymentProvider);
 
-    public function getStripePaymentIntentReadModel(OrderRead $orderRead): StripePaymentIntentReadModel;
+    public function getStripePaymentIntentReadModel(PaymentData $paymentData): StripePaymentIntentReadModel;
 }

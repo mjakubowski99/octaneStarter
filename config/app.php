@@ -196,7 +196,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         \Component\Payment\Infrastracture\Provider\PaymentServiceProvider::class,
         \Common\Provider\CommonServiceProvider::class,
-        \Component\Auth\Infrastructure\Provider\AuthServiceProvider::class
+        \Component\Auth\Infrastructure\Provider\AuthServiceProvider::class,
+        \Component\Product\Infrastructure\Provider\ProductServiceProvider::class
     ],
 
     /*

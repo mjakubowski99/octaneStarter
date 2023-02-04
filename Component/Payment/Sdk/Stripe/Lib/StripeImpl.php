@@ -9,6 +9,7 @@ use Component\Payment\Sdk\Stripe\Event\StripeEvent;
 use Component\Payment\Sdk\Stripe\Event\StripeEventImpl;
 use Component\Payment\Sdk\Stripe\Intent\StripePaymentIntent;
 use Component\Payment\Sdk\Stripe\ValueObject\Status;
+use Illuminate\Support\Facades\Session;
 use Stripe\Account;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Exception\UnexpectedValueException;
@@ -41,6 +42,8 @@ class StripeImpl implements Stripe
 
         return new StripePaymentIntent(
             $paymentIntent->id,
+            $this->config->get('services.stripe.publishable_key'),
+            $paymentIntent->client_secret,
             new Status($paymentIntent->status),
             $accountId
         );

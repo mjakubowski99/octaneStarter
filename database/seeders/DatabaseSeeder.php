@@ -11,9 +11,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        //$this->call(PaymentProviderTableSeeder::class);
-        //$this->call(OrderStatusTableSeeder::class);
-
-        Product::factory()->create();
+        $this->call(PaymentProviderTableSeeder::class);
+        $this->call(OrderStatusTableSeeder::class);
+        $this->call(ProductSeeder::class);
     }
 }
