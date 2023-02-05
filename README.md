@@ -22,6 +22,12 @@ Run containers
 ``` 
 docker-compose up -d 
 ```
+
+Products page
+```
+http://localhost/products
+```
+
 ## Setup XDebug For PHPSTORM
 
 Go to Settings -> PHP -> Servers  
