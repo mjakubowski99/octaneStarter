@@ -1,3 +1,27 @@
+# Stripe payment system
+
+## Requirements
+ - docker
+ - docker-compose
+
+## Installation
+
+Copy env
+```
+cp .env.example .env
+```
+
+Setup Stripe api keys
+``` 
+STRIPE_PUBLISHABLE_KEY=
+STRIPE_API_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_CONNECT_WEBHOOK_SECRET=
+```
+Run containers
+``` 
+docker-compose up -d 
+```
 ## Setup XDebug For PHPSTORM
 
 Go to Settings -> PHP -> Servers  
