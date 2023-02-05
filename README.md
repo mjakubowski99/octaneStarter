@@ -3,6 +3,7 @@
 ## Requirements
  - docker
  - docker-compose
+ - npm
 
 ## Installation
 
@@ -23,6 +24,12 @@ Run containers
 docker-compose up -d 
 ```
 You need to wait some time to containers startup 
+
+Then you need to compile frontend assets with:
+```
+npm run dev
+```
+
 Products page
 ```
 http://localhost/products
