@@ -25,9 +25,9 @@ docker-compose up -d
 ```
 You need to wait some time to containers startup 
 
-Then you need to compile frontend assets with:
+Then you need to build frontend assets with:
 ```
-npm run dev
+npm run build
 ```
 
 Products page
