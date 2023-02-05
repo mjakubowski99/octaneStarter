@@ -85,7 +85,7 @@ async function checkStatus() {
     switch (paymentIntent.status) {
         case "succeeded":
             showMessage("Payment succeeded!");
-            fetch('/api/emulate/webhook?payment_intent_id='+paymentIntent.id, {
+            await fetch('/api/emulate/webhook?payment_intent_id='+paymentIntent.id, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
