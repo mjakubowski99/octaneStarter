@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $product = Product::factory()->create([
-            'amount' => 100,
+            'amount' => 10000,
             'currency' => Currency::pln()->getValue()
         ]);
         ProductDetail::factory()->create([
@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
         ]);
 
         $product = Product::factory()->create([
-            'amount' => 2000,
+            'amount' => 200000,
             'currency' => Currency::pln()->getValue()
         ]);
         ProductDetail::factory()->create([
@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
         ]);
 
         $product = Product::factory()->create([
-            'amount' => 20,
+            'amount' => 200,
             'currency' => Currency::pln()->getValue()
         ]);
         ProductDetail::factory()->create([

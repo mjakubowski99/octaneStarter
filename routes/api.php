@@ -15,6 +15,9 @@ use Component\Payment\Infrastracture\Http\Controller\OrderController;
 |
 */
 
+Route::put('/emulate/webhook', [OrderController::class, 'emulateStripeWebhookNotification'])->name(
+    'stripe.webhook.emulate'
+);
 
 Route::put('/stripe/webhook', [OrderController::class, 'receiveStripeWebhookNotification'])->name(
     'stripe.webhook.update'

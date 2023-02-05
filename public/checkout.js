@@ -15,16 +15,27 @@ document
 let emailAddress = '';
 // Fetches a payment intent and captures the client secret
 async function initialize() {
-    const { clientSecret } = await fetch("/api/stripe/paymentIntent", {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+
+    if (!localStorage.getItem('token')) {
+        localStorage.setItem('token', params.token);
+    }
+
+    const { client_secret } = await fetch("/api/stripe/paymentIntent", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer "+localStorage.getItem('token')
+        },
         body: JSON.stringify({
-            product_id: '6f99510a-5f87-4d13-b98a-5c74ac6d76a7',
+            product_id: params.id,
             payment_methods: ['card']
         }),
     }).then((r) => r.json());
 
-    elements = stripe.elements({clientSecret: "pi_3MX8PrKMEBgWaht30ZUg1xbe_secret_Mnmk7cPZVCLjIVSPk2oExvTfZ"});
+    elements = stripe.elements({clientSecret: client_secret});
 
     const linkAuthenticationElement = elements.create("linkAuthentication");
     linkAuthenticationElement.mount("#link-authentication-element");
@@ -74,6 +85,14 @@ async function checkStatus() {
     switch (paymentIntent.status) {
         case "succeeded":
             showMessage("Payment succeeded!");
+            fetch('/api/emulate/webhook?payment_intent_id='+paymentIntent.id, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            }).then((r) => r.json());
+            window.location.href = "/products";
             break;
         case "processing":
             showMessage("Your payment is processing.");

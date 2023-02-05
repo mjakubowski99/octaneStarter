@@ -61,11 +61,11 @@ class Product
     public function toArray(): array
     {
         return [
-            'id' => $this->id->getUuid(),
+            'uuid' => $this->id->getUuid(),
             'name' => $this->name,
             'description' => $this->description,
             'image_url' => $this->image,
-            'amount' => $this->price->getAmount(),
+            'amount' => $this->price->getAmount()/100,
             'currency' => $this->price->getCurrency()
         ];
     }

@@ -20,15 +20,15 @@ use App\Http\Controllers\ProductController;
 */
 Auth::routes();
 
-Route::get('/products', [ProductController::class, 'index']);
-
 Route::group(['middleware' => ['auth:web']], function() {
-    Route::redirect('/home', '/');
+    Route::get('/products', [ProductController::class, 'index']);
+
+    Route::redirect('/home', 'products');
     Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/stripe/checkout', function (){
+        return view('stripe.checkout.checkout');
+    })->name('stripe.checkout');
 });
 
-Route::post('stripe/paymentIntent', [OrderController::class, 'createWithStripe']);
 
-Route::get('/stripe/checkout', function (){
-    return view('stripe.checkout.checkout');
-})->name('stripe.checkout');

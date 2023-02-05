@@ -35,7 +35,7 @@ final class UpdateOrderStatus
                 new OrderSucceeded($this->orderRepository->findByPaymentProviderOrderId($paymentProviderOrderId))
             );
         } else {
-            throw new ApiException("Unhandled status update from: {$currentStatus->getValue()} to {$currentStatus->getValue()}");
+            throw new ApiException("Unhandled status update from: {$currentStatus->getValue()} to {$orderStatus->getValue()}");
         }
     }
 }

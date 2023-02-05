@@ -90,7 +90,7 @@ final class OrderStatus
 
     public function isSucceeded(): bool
     {
-        return $this->value === self::CANCELLED;
+        return $this->value === self::SUCCEEDED;
     }
 
     public function isCancelled(): bool

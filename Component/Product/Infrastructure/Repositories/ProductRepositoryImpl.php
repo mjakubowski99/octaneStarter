@@ -24,6 +24,8 @@ class ProductRepositoryImpl implements ProductRepository
     {
         return $this->db::table('products')
             ->join('product_details', 'product_details.product_id', '=', 'products.id')
+            ->leftJoin('user_products', 'user_products.product_id', '=', 'products.id')
+            ->whereNull('user_products.product_id')
             ->select(
                 'products.id',
                 'products.amount',
@@ -38,7 +40,7 @@ class ProductRepositoryImpl implements ProductRepository
                     $product->name,
                     $product->description,
                     new Price($product->amount, new Currency($product->currency)),
-                    asset($product->image_url)
+                    asset('assets/'.$product->image_url)
                 );
             })->toArray();
     }

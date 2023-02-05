@@ -84,7 +84,7 @@ class OrderRepositoryImpl implements OrderRepository
     {
         $order = $this->database::table('orders')
             ->where('payment_provider_order_id', $paymentProviderOrderId)
-            ->select('order_status')
+            ->select('order_status_id')
             ->first();
 
         if ($order === null) {
@@ -99,7 +99,7 @@ class OrderRepositoryImpl implements OrderRepository
         $this->database::table('orders')
             ->where('payment_provider_order_id', $paymentProviderOrderId)
             ->update([
-                'order_status' => $orderStatus->getValue()
+                'order_status_id' => $orderStatus->getValue()
             ]);
 
         return $this->findByPaymentProviderOrderId($paymentProviderOrderId);

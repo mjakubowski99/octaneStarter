@@ -7,4 +7,13 @@
     <div class="flex-1">
         <a class="btn btn-ghost normal-case text-xl">{{config('app.name')}}</a>
     </div>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
+
+    <div class="flex-none mr-4">
+        @livewire('dropdown', [
+            'content' => 'User products'
+        ])
+    </div>
 </div>

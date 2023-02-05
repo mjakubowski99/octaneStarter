@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Component\Payment\Infrastracture\Http\Controller;
 
 use Common\Http\Controller\AbstractController;
+use Common\ValueObject\OrderStatus;
 use Common\ValueObject\PaymentProvider;
 use Common\ValueObject\Uuid;
 use Component\Auth\Sdk\AuthFacade;
+use Component\Payment\Domain\UseCase\UpdateOrderStatus;
 use Component\Payment\Infrastracture\Http\Request\Stripe\CreatePaymentIntentRequest;
 use Component\Payment\Infrastracture\Http\Request\Stripe\StripeWebhookNotificationRequest;
 use Component\Payment\Sdk\PaymentFacade;
@@ -17,11 +19,13 @@ class OrderController extends AbstractController
 {
     private AuthFacade $authFacade;
     private PaymentFacade $paymentFacade;
+    private UpdateOrderStatus $updateOrderStatus;
 
-    public function __construct(AuthFacade $authFacade, PaymentFacade $paymentFacade)
+    public function __construct(AuthFacade $authFacade, PaymentFacade $paymentFacade, UpdateOrderStatus $updateOrderStatus)
     {
         $this->authFacade = $authFacade;
         $this->paymentFacade = $paymentFacade;
+        $this->updateOrderStatus = $updateOrderStatus;
     }
 
     public function createWithStripe(CreatePaymentIntentRequest $request): JsonResponse
@@ -42,6 +46,17 @@ class OrderController extends AbstractController
     public function receiveStripeWebhookNotification(StripeWebhookNotificationRequest $request): JsonResponse
     {
         $this->paymentFacade->receiveWebhookNotification($request);
+
+        return new JsonResponse(null, 200);
+    }
+
+    public function emulateStripeWebhookNotification(): JsonResponse
+    {
+        $this->updateOrderStatus->handle(
+            request()->input('payment_intent_id'),
+            OrderStatus::succeeded(),
+            PaymentProvider::stripe()
+        );
 
         return new JsonResponse(null, 200);
     }
