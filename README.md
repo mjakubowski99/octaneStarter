@@ -22,7 +22,7 @@ Run containers
 ``` 
 docker-compose up -d 
 ```
-
+You need to wait some time to containers startup 
 Products page
 ```
 http://localhost/products
